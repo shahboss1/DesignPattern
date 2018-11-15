@@ -12,6 +12,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ * Doodle class
+ */
 public class DoodleView extends Application
 {
     public static final int WIN_WIDTH = 1000;
