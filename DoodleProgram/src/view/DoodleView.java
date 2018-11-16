@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -11,6 +12,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.IShapes;
+
+import java.util.ArrayList;
+
 
 public class DoodleView extends Application
 {
@@ -19,6 +24,10 @@ public class DoodleView extends Application
     public static final int SHAPE_ICON_SIZE = 20;
     public static final int MAX_STROKE = 20;
     public static final int MIN_STROKE = 1;
+    public static double x1 = 0;
+    public static double y1 = 0;
+
+    
 
     //drawing on the canvas
     private Canvas canvas;
@@ -163,12 +172,43 @@ public class DoodleView extends Application
 
     private Parent getCanvas()
     {
-        VBox box = new VBox();
 
-        canvas = new Canvas();
+        VBox box = new VBox();
+        
+        canvas = new Canvas(WIN_WIDTH, WIN_HEIGHT);
+        GraphicsContext graphics = canvas.getGraphicsContext2D();
         canvas.setStyle("-fx-background-color: black");
-        canvas.widthProperty().bind(box.widthProperty());
-        canvas.heightProperty().bind(box.heightProperty());
+//        canvas.widthProperty().bind(box.widthProperty());
+//        canvas.heightProperty().bind(box.heightProperty());
+        box.setStyle("-fx-background-color: #FFFFFF;");
+        canvas.setOnMousePressed( event->{
+             x1 = event.getX();
+             y1 = event.getY();
+//            double x2 = x1 + 500;
+//            double y2 = y1 + 400;
+            graphics.setStroke( Color.rgb( 120,12,43 ) );
+            graphics.setLineWidth( 10 );
+//            graphics.strokeLine(x1, y1, x2, y2); //draw a line
+        });
+        
+        canvas.setOnMouseDragged( event ->{
+        double x2 = event.getX();
+        double y2 = event.getY();
+        graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        graphics.setStroke( Color.rgb( 12,120,43 ) );
+        graphics.setLineWidth( 10 );
+        graphics.strokeLine(x1, y1, x2, y2); //draw a line
+    });
+        canvas.setOnMouseReleased( event -> {
+            //store to arraylist of shapes
+            //set a mouse.clear screen and draw all shapes
+                } );
+    
+        
+
+//        graphics.strokeOval(x, y, width, height); //draw an oval
+//        graphics.strokeRectangle(x, y, width, height); //draw a rectangle
+//        graphics.strokePolyline(x[], y[], numPoints); //draw a several lines connected by points (a squiggle)
 
         box.getChildren().add(canvas);
 
