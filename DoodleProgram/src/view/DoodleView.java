@@ -188,7 +188,6 @@ public class DoodleView extends Application
     
     private Parent getCanvas()
     {
-        
         VBox box = new VBox();
         
         canvas = new Canvas(WIN_WIDTH, WIN_HEIGHT);
