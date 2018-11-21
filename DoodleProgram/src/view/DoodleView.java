@@ -203,7 +203,6 @@ public class DoodleView extends Application
 //            double x2 = x1 + 500;
 //            double y2 = y1 + 400;
             graphics.setStroke( Color.rgb( 120,12,43 ) );
-            graphics.setLineWidth( 10 );
 //            graphics.strokeLine(x1, y1, x2, y2); //draw a line
         });
         
@@ -212,9 +211,8 @@ public class DoodleView extends Application
             double y2 = event.getY();
             graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             graphics.setStroke( Color.rgb( 12,120,43 ) );
-            graphics.setLineWidth( 10 );
             controller.removePreviousShape();
-            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue());
+            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue());
             controller.redrawAllShapes( graphics );
 
             
@@ -224,7 +222,7 @@ public class DoodleView extends Application
             //set a mouse.clear screen and draw all shapes
             double x2 = event.getX();
             double y2 = event.getY();
-            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue());
+            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue());
             controller.redrawAllShapes( graphics );
 
             
