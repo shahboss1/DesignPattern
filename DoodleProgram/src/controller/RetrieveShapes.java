@@ -1,25 +1,26 @@
 package controller;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import model.IShapes;
 import model.Oval;
 import model.Rectangle;
 
-import java.awt.*;
+
 import java.util.ArrayList;
 
 public class RetrieveShapes
 {
     ArrayList<IShapes> array = new ArrayList <>(  );
     
-    public void addShape(GraphicsContext graphics, double x,double y,double endX,double endY, String choose)
+    public void addShape(GraphicsContext graphics, double x,double y,double endX,double endY, String choose, Color fillColor, Color strokeColor)
     {
         //this method will store shape
         switch (choose)
         {
             case "Rectangle" :
                 System.out.println("Draw Rectangle" );
-                Rectangle rectangle = new Rectangle(x, y, endX, endY);
+                Rectangle rectangle = new Rectangle(x, y, endX, endY, fillColor, strokeColor);
                 rectangle.drawShape( graphics  );
                 array.add( rectangle );
                 break;

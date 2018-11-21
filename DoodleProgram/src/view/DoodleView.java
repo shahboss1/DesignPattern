@@ -214,7 +214,7 @@ public class DoodleView extends Application
             graphics.setStroke( Color.rgb( 12,120,43 ) );
             graphics.setLineWidth( 10 );
             controller.removePreviousShape();
-            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape);
+            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue());
             controller.redrawAllShapes( graphics );
 
             
@@ -224,7 +224,7 @@ public class DoodleView extends Application
             //set a mouse.clear screen and draw all shapes
             double x2 = event.getX();
             double y2 = event.getY();
-            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape);
+            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue());
             controller.redrawAllShapes( graphics );
 
             
