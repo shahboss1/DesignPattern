@@ -28,13 +28,16 @@ public class DoodleView extends Application
     public static final int MIN_STROKE = 1;
     public static double x1 = 0;
     public static double y1 = 0;
+    public static double x = 0;
+    public static double y = 0;
+    public static double width = 0;
+    public static double height = 0;
+    public static String typeOfShape = "Line";
     
     //create instance of an object and then call drawshape method on that object
     public static IShapes shape;
     
     public RetrieveShapes controller = new RetrieveShapes();
-    
-    
     
     //drawing on the canvas
     private Canvas canvas;
@@ -167,6 +170,10 @@ public class DoodleView extends Application
     {
         ToggleButton result = new ToggleButton();
         result.setGraphic(getButtonIcon(text));
+        
+        result.setOnAction( event -> {
+            typeOfShape = text;
+        } );
         return result;
     }
     
@@ -176,6 +183,8 @@ public class DoodleView extends Application
         result.setGraphic(getButtonIcon(text));
         return result;
     }
+    
+    
     
     private Parent getCanvas()
     {
@@ -206,7 +215,7 @@ public class DoodleView extends Application
             graphics.setStroke( Color.rgb( 12,120,43 ) );
             graphics.setLineWidth( 10 );
             controller.removePreviousShape();
-            controller.addShape( graphics, x1,y1,x2,y2);
+            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape);
             controller.redrawAllShapes( graphics );
 
             
@@ -216,7 +225,7 @@ public class DoodleView extends Application
             //set a mouse.clear screen and draw all shapes
             double x2 = event.getX();
             double y2 = event.getY();
-            controller.addShape( graphics, x1,y1,x2,y2);
+            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape);
             controller.redrawAllShapes( graphics );
 
             
