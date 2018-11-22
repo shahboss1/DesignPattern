@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.CheckBox;
 import javafx.scene.paint.Color;
 
 import java.awt.*;
@@ -14,8 +15,10 @@ public class Oval implements IShapes
     private Color fillColor;
     private Color strokeColor;
     private final double strokeline;
+    private boolean filledCheckbox;
     
-    public Oval(double x,double y,double endX,double endY,javafx.scene.paint.Color fillColor,Color strokeColor, double strokeline)
+    
+    public Oval(double x,double y,double endX,double endY,javafx.scene.paint.Color fillColor,Color strokeColor, double strokeline, boolean filledCheckbox)
     {
         this.x = x;
         this.y = y;
@@ -24,6 +27,7 @@ public class Oval implements IShapes
         this.fillColor = fillColor;
         this.strokeColor = strokeColor;
         this.strokeline = strokeline;
+        this.filledCheckbox = filledCheckbox;
     }
     
     @Override
@@ -35,7 +39,10 @@ public class Oval implements IShapes
         graphics.setLineWidth( strokeline );
         graphics.setFill( fillColor );
         graphics.strokeOval(x, y, width, height); //draw an oval
-        graphics.fillOval(x, y, width, height);
+        if (filledCheckbox)
+        {
+            graphics.fillOval(x, y, width, height);
+        }
         
     }
 }

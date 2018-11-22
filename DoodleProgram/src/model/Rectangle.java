@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.CheckBox;
 import javafx.scene.paint.Color;
 
 public class Rectangle implements IShapes
@@ -13,8 +14,9 @@ public class Rectangle implements IShapes
     private double endY;
     private Color fillColor;
     private Color strokeColor;
+    private boolean filledCheckbox;
     
-    public Rectangle(double x,double y,double endX,double endY,Color fillColor, Color strokeColor, double strokeline)
+    public Rectangle(double x,double y,double endX,double endY,Color fillColor, Color strokeColor, double strokeline, boolean filledCheckbox)
     {
         this.x = x;
         this.y = y;
@@ -23,6 +25,7 @@ public class Rectangle implements IShapes
         this.fillColor = fillColor;
         this.strokeColor = strokeColor;
         this.strokeline = strokeline;
+        this.filledCheckbox = filledCheckbox;
     }
     
     @Override
@@ -34,6 +37,11 @@ public class Rectangle implements IShapes
         graphics.setLineWidth( strokeline );
         graphics.setFill( fillColor );
         graphics.strokeRect(x, y, width, height); //draw a rectangle
-        graphics.fillRect(x, y, width, height);
+  
+    
+        if (filledCheckbox)
+        {
+            graphics.fillRect(x, y, width, height);
+        }
     }
 }

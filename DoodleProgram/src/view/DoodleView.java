@@ -14,9 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.IShapes;
-import model.Rectangle;
-
-import java.util.ArrayList;
 
 
 public class DoodleView extends Application
@@ -212,7 +209,7 @@ public class DoodleView extends Application
             graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             graphics.setStroke( Color.rgb( 12,120,43 ) );
             controller.removePreviousShape();
-            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue());
+            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
             controller.redrawAllShapes( graphics );
 
             
@@ -222,7 +219,7 @@ public class DoodleView extends Application
             //set a mouse.clear screen and draw all shapes
             double x2 = event.getX();
             double y2 = event.getY();
-            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue());
+            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
             controller.redrawAllShapes( graphics );
 
             
