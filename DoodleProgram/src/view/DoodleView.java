@@ -38,6 +38,7 @@ public class DoodleView extends Application
     
     //drawing on the canvas
     private Canvas canvas;
+    private GraphicsContext graphics;
     
     //selecting shapes
     private ToggleGroup shapeGroup;
@@ -152,6 +153,19 @@ public class DoodleView extends Application
         }
         editPanel.getChildren().addAll(buttons);
         
+        //button array for undo
+        buttons[0].setOnAction( event -> {
+            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            controller.undoShape( graphics );
+   
+        } );
+    
+        //button array for redo
+        buttons[1].setOnAction( event -> {
+            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            controller.redoShape( graphics );
+ 
+        } );
         return editPanel;
     }
     
@@ -188,7 +202,7 @@ public class DoodleView extends Application
         VBox box = new VBox();
         
         canvas = new Canvas(WIN_WIDTH, WIN_HEIGHT);
-        GraphicsContext graphics = canvas.getGraphicsContext2D();
+        graphics = canvas.getGraphicsContext2D();
         canvas.setStyle("-fx-background-color: black");
 //        canvas.widthProperty().bind(box.widthProperty());
 //        canvas.heightProperty().bind(box.heightProperty());
@@ -208,11 +222,12 @@ public class DoodleView extends Application
             double y2 = event.getY();
             graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             graphics.setStroke( Color.rgb( 12,120,43 ) );
-            controller.removePreviousShape();
             controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
             controller.redrawAllShapes( graphics );
-
-            
+            controller.removePreviousShape();
+    
+    
+    
         });
         canvas.setOnMouseReleased( event -> {
             //store to arraylist of shapes
@@ -224,6 +239,7 @@ public class DoodleView extends Application
 
             
         } );
+        
 
 //        graphics.strokeOval(x, y, width, height); //draw an oval
 //        graphics.strokeRectangle(x, y, width, height); //draw a rectangle

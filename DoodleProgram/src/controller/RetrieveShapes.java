@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class RetrieveShapes
 {
     ArrayList<IShapes> array = new ArrayList <>(  );
+    ArrayList<IShapes> undoList = new ArrayList <>(  );
+    
     
     public void addShape(GraphicsContext graphics,double x,double y,double endX,double endY,String choose,Color fillColor,Color strokeColor,double strokeline, boolean filledCheckbox)
     {
@@ -49,6 +51,30 @@ public class RetrieveShapes
         {
             array.remove( array.size() -1 );
         }
+    }
+    public void undoShape(GraphicsContext graphics)
+    {
+        if (array.size() > 0)
+        {
+            IShapes shape = array.remove( array.size() -1 );
+            undoList.add( shape );
+            System.out.println("testing undo" + array.size() );
+        }
+        redrawAllShapes( graphics );
+    }
+    
+    public void redoShape(GraphicsContext graphics)
+    {
+        //should call redraw method here
+        if (undoList.size() > 0)
+        {
+            IShapes shape = undoList.remove( undoList.size() -1 );
+            array.add( shape );
+            System.out.println("testing redo" );
+            
+        }
+        redrawAllShapes( graphics );
+    
     }
     
 }
