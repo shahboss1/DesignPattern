@@ -236,7 +236,6 @@ public class DoodleView extends Application
             double y2 = event.getY();
             controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
             controller.redrawAllShapes( graphics );
-
             
         } );
         

@@ -3,9 +3,11 @@ package controller;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.CheckBox;
 import javafx.scene.paint.Color;
+//import javafx.scene.shape.Line;
 import model.IShapes;
 import model.Oval;
 import model.Rectangle;
+import model.Line;
 
 
 import java.util.ArrayList;
@@ -32,6 +34,13 @@ public class RetrieveShapes
                 Oval oval = new Oval(x, y, endX, endY, fillColor, strokeColor, strokeline, filledCheckbox);
                 oval.drawShape( graphics  );
                 array.add( oval );
+                break;
+                
+            case "Line" :
+                System.out.println("Draw Line" );
+                Line line = new Line( x, y, endX, endY, fillColor, strokeColor, strokeline, filledCheckbox);
+                line.drawShape( graphics  );
+                array.add( line );
                 break;
             
         }
