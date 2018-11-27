@@ -4,10 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.CheckBox;
 import javafx.scene.paint.Color;
 //import javafx.scene.shape.Line;
-import model.IShapes;
-import model.Oval;
-import model.Rectangle;
-import model.Line;
+import model.*;
 
 
 import java.util.ArrayList;
@@ -18,29 +15,35 @@ public class RetrieveShapes
     ArrayList<IShapes> undoList = new ArrayList <>(  );
     
     
-    public void addShape(GraphicsContext graphics,double x,double y,double endX,double endY,String choose,Color fillColor,Color strokeColor,double strokeline, boolean filledCheckbox)
+    public void addShape(GraphicsContext graphics,ArrayList<Double> x,ArrayList<Double> y, String choose,Color fillColor,Color strokeColor,double strokeline, boolean filledCheckbox)
     {
         //this method will store shape
         switch (choose)
         {
             case "Rectangle" :
                 System.out.println("Draw Rectangle" );
-                Rectangle rectangle = new Rectangle(x, y, endX, endY, fillColor, strokeColor, strokeline, filledCheckbox);
+                Rectangle rectangle = new Rectangle(x.get( 0 ), y.get( 0 ), x.get( x.size()-1 ), y.get( y.size()-1 ), fillColor, strokeColor, strokeline, filledCheckbox);
                 rectangle.drawShape( graphics  );
                 array.add( rectangle );
                 break;
             case "Oval" :
                 System.out.println("Draw Oval" );
-                Oval oval = new Oval(x, y, endX, endY, fillColor, strokeColor, strokeline, filledCheckbox);
+                Oval oval = new Oval(x.get( 0 ), y.get( 0 ), x.get( x.size()-1 ), y.get( y.size()-1 ), fillColor, strokeColor, strokeline, filledCheckbox);
                 oval.drawShape( graphics  );
                 array.add( oval );
                 break;
                 
             case "Line" :
                 System.out.println("Draw Line" );
-                Line line = new Line( x, y, endX, endY, fillColor, strokeColor, strokeline, filledCheckbox);
+                Line line = new Line(x.get( 0 ), y.get( 0 ), x.get( x.size()-1 ), y.get( y.size()-1 ), fillColor, strokeColor, strokeline, filledCheckbox);
                 line.drawShape( graphics  );
                 array.add( line );
+                break;
+            case "Squiggle" :
+                System.out.println("Draw Whatever you like" );
+                Squiggle polyLine = new Squiggle(x, y, fillColor, strokeColor, strokeline, filledCheckbox);
+                polyLine.drawShape( graphics  );
+                array.add( polyLine );
                 break;
             
         }

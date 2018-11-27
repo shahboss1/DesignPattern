@@ -15,6 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.IShapes;
 
+import java.util.ArrayList;
+
 
 public class DoodleView extends Application
 {
@@ -23,8 +25,8 @@ public class DoodleView extends Application
     public static final int SHAPE_ICON_SIZE = 20;
     public static final int MAX_STROKE = 20;
     public static final int MIN_STROKE = 1;
-    public static double x1 = 0;
-    public static double y1 = 0;
+    public static ArrayList<Double> x1 = new ArrayList <>(  );
+    public static ArrayList<Double> y1 = new ArrayList <>(  );
     public static double x = 0;
     public static double y = 0;
     public static double width = 0;
@@ -209,8 +211,11 @@ public class DoodleView extends Application
         box.setStyle("-fx-background-color: #FFFFFF;");
         
         canvas.setOnMousePressed( event->{
-            x1 = event.getX();
-            y1 = event.getY();
+//             x1 = event.getX();
+             x1.add( event.getX() );
+//             y1 = event.getY();
+            y1.add( event.getY() );
+            
 //            double x2 = x1 + 500;
 //            double y2 = y1 + 400;
             graphics.setStroke( Color.rgb( 120,12,43 ) );
@@ -220,9 +225,11 @@ public class DoodleView extends Application
         canvas.setOnMouseDragged( event ->{
             double x2 = event.getX();
             double y2 = event.getY();
+            x1.add(x2);
+            y1.add(y2);
             graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             graphics.setStroke( Color.rgb( 12,120,43 ) );
-            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
+            controller.addShape( graphics, x1,y1, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
             controller.redrawAllShapes( graphics );
             controller.removePreviousShape();
     
@@ -234,8 +241,12 @@ public class DoodleView extends Application
             //set a mouse.clear screen and draw all shapes
             double x2 = event.getX();
             double y2 = event.getY();
-            controller.addShape( graphics, x1,y1,x2,y2, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
+            x1.add(x2);
+            y1.add(y2);
+            controller.addShape( graphics, x1,y1, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
             controller.redrawAllShapes( graphics );
+            x1.clear();
+            y1.clear();
             
         } );
         

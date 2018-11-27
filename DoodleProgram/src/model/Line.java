@@ -6,7 +6,6 @@ import javafx.scene.paint.Color;
 
 public class Line implements IShapes
 {
-    
     private final double strokeline;
     private double x;
     private double y;
