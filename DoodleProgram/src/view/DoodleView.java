@@ -2,6 +2,7 @@ package view;
 
 import controller.RetrieveShapes;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -281,6 +282,9 @@ public class DoodleView extends Application
     {
         MenuItem[] items = {new MenuItem("Quit")};
         file.getItems().addAll(items);
+        file.setOnAction( event -> {
+            Platform.exit();
+        } );
     }
     
     private void editMenu(Menu edit)
