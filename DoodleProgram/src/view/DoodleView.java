@@ -3,12 +3,15 @@ package view;
 import controller.RetrieveShapes;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -301,8 +304,22 @@ public class DoodleView extends Application
         shapesMenu.getItems().addAll(shapes);
         draw.getItems().add(shapesMenu);
         
+        for(int i=0; i < shapes.length; i++)
+        {
+            MenuItem clickImage = shapes[i];
+            shapes[i].setOnAction( event -> {
+                typeOfShape = clickImage.getText();
+                
+            } );
+        }
+        
         MenuItem clear = new MenuItem("Clear Shapes");
         draw.getItems().add(clear);
+        clear.setOnAction(event ->  {
+            System.out.println("testing clear" );
+            controller.clearAll(graphics);
+            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        });
     }
     
     private void help(Menu about)

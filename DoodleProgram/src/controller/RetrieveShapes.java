@@ -14,6 +14,13 @@ public class RetrieveShapes
     ArrayList<IShapes> array = new ArrayList <>(  );
     ArrayList<IShapes> undoList = new ArrayList <>(  );
     
+    public void clearAll(GraphicsContext graphics)
+    {
+        array.clear();
+        undoList.clear();
+        System.out.println("clear all" );
+    }
+    
     
     public void addShape(GraphicsContext graphics,ArrayList<Double> x,ArrayList<Double> y, String choose,Color fillColor,Color strokeColor,double strokeline, boolean filledCheckbox)
     {
