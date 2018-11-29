@@ -40,5 +40,10 @@ public class Squiggle implements IShapes
         graphics.setLineWidth( strokeline );
         graphics.setFill( fillColor );
         graphics.strokePolyline(x, y, numPoints); //draw a several lines connected by points (a squiggle)
+    
+        if (filledCheckbox)
+        {
+            graphics.fillPolygon(x, y, numPoints );
+        }
     }
 }

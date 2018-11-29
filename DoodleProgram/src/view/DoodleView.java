@@ -3,15 +3,12 @@ package view;
 import controller.RetrieveShapes;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,13 +21,14 @@ import java.util.ArrayList;
 
 public class DoodleView extends Application
 {
+    
     public static final int WIN_WIDTH = 1000;
     public static final int WIN_HEIGHT = 600;
     public static final int SHAPE_ICON_SIZE = 20;
     public static final int MAX_STROKE = 20;
     public static final int MIN_STROKE = 1;
-    public static ArrayList<Double> x1 = new ArrayList <>(  );
-    public static ArrayList<Double> y1 = new ArrayList <>(  );
+    public static ArrayList <Double> x1 = new ArrayList <>( );
+    public static ArrayList <Double> y1 = new ArrayList <>( );
     public static double x = 0;
     public static double y = 0;
     public static double width = 0;
@@ -40,7 +38,7 @@ public class DoodleView extends Application
     //create instance of an object and then call drawshape method on that object
     public static IShapes shape;
     
-    public RetrieveShapes controller = new RetrieveShapes();
+    public RetrieveShapes controller = new RetrieveShapes( );
     
     //drawing on the canvas
     private Canvas canvas;
@@ -50,145 +48,163 @@ public class DoodleView extends Application
     private ToggleGroup shapeGroup;
     
     //shape settings
-    private ColorPicker fillColorPicker = new ColorPicker();
-    private ColorPicker strokeColorPicker = new ColorPicker();
+    private ColorPicker fillColorPicker = new ColorPicker( );
+    private ColorPicker strokeColorPicker = new ColorPicker( );
     private Slider strokeSlider;
     private CheckBox filledCheckbox;
     
     @Override
     public void start(Stage stage)
     {
-        stage.setTitle("Doodle Program");
-        stage.setScene(getPrimaryScene());
-        stage.show();
+        
+        stage.setTitle( "Doodle Program" );
+        stage.setScene( getPrimaryScene( ) );
+        stage.show( );
     }
     
     private Scene getPrimaryScene()
     {
-        BorderPane mainPanel = new BorderPane();
         
-        VBox top = new VBox();
-        top.getChildren().addAll(buildMenu(), getToolbar());
+        BorderPane mainPanel = new BorderPane( );
+        
+        VBox top = new VBox( );
+        top.getChildren( ).addAll( buildMenu( ),getToolbar( ) );
         
         //set the primary regions
-        mainPanel.setTop(top);
-        mainPanel.setCenter(getCanvas());
+        mainPanel.setTop( top );
+        mainPanel.setCenter( getCanvas( ) );
         
-        Scene scene = new Scene(mainPanel, WIN_WIDTH, WIN_HEIGHT);
-        scene.getStylesheets().add("styles.css");
+        Scene scene = new Scene( mainPanel,WIN_WIDTH,WIN_HEIGHT );
+        scene.getStylesheets( ).add( "styles.css" );
         
         return scene;
     }
     
     private Parent getToolbar()
     {
-        HBox panel = new HBox();
-        panel.setId("toolbar-main");
-        panel.getChildren().addAll(buildShapeSection(), buildSettings(), buildEdit());
+        
+        HBox panel = new HBox( );
+        panel.setId( "toolbar-main" );
+        panel.getChildren( ).addAll( buildShapeSection( ),buildSettings( ),buildEdit( ) );
         
         return panel;
     }
     
+    ToggleButton[] buttons;
+    
     private HBox buildShapeSection()
     {
-        HBox shapesPanel = new HBox();
-        shapesPanel.setId("toolbar-shapes");
         
-        String[] shapes = {"Line", "Oval", "Rectangle", "Squiggle"};
-        ToggleButton[] buttons = new ToggleButton[shapes.length];
-        shapeGroup = new ToggleGroup();
+        HBox shapesPanel = new HBox( );
+        shapesPanel.setId( "toolbar-shapes" );
         
-        for (int i = 0; i < shapes.length; i++) {
-            buttons[i] = getImageToggleButton(shapes[i]);
+        String[] shapes = {"Line","Oval","Rectangle","Squiggle"};
+        buttons = new ToggleButton[shapes.length];
+        shapeGroup = new ToggleGroup( );
+        
+        for (int i = 0; i < shapes.length; i++)
+        {
+            buttons[i] = getImageToggleButton( shapes[i] );
         }
         
-        buttons[0].setSelected(true);
-        shapeGroup.getToggles().addAll(buttons);
-        shapesPanel.getChildren().addAll(buttons);
+        buttons[0].setSelected( true );
+        
+        shapeGroup.getToggles( ).addAll( buttons );
+        shapesPanel.getChildren( ).addAll( buttons );
         
         return shapesPanel;
     }
     
     private HBox buildSettings()
     {
-        HBox settingsPanel = new HBox();
-        settingsPanel.setId("toolbar-settings");
         
-        styleColorPicker(fillColorPicker);
-        styleColorPicker(strokeColorPicker);
+        HBox settingsPanel = new HBox( );
+        settingsPanel.setId( "toolbar-settings" );
         
-        VBox strokeBox = new VBox();
-        Label strokeLabel = new Label("Stroke: 1");
-        strokeSlider = new Slider();
-        strokeBox.getChildren().addAll(strokeSlider, strokeLabel);
+        styleColorPicker( fillColorPicker );
+        styleColorPicker( strokeColorPicker );
         
-        strokeSlider.setMin(MIN_STROKE);
-        strokeSlider.setMax(MAX_STROKE);
-        strokeSlider.valueProperty().addListener((observable, oldV, newV) ->
-                strokeLabel.setText("Stroke: " + numToInt(newV)));
+        VBox strokeBox = new VBox( );
+        Label strokeLabel = new Label( "Stroke: 1" );
+        strokeSlider = new Slider( );
+        strokeBox.getChildren( ).addAll( strokeSlider,strokeLabel );
         
-        filledCheckbox = new CheckBox("Filled");
+        strokeSlider.setMin( MIN_STROKE );
+        strokeSlider.setMax( MAX_STROKE );
+        strokeSlider.valueProperty( ).addListener( (observable,oldV,newV) ->
+                strokeLabel.setText( "Stroke: " + numToInt( newV ) ) );
         
-        settingsPanel.getChildren().addAll(new Label("Fill:"), fillColorPicker,
-                new Label("Stroke:"), strokeColorPicker, strokeBox, filledCheckbox);
+        filledCheckbox = new CheckBox( "Filled" );
+        
+        settingsPanel.getChildren( ).addAll( new Label( "Fill:" ),fillColorPicker,
+                new Label( "Stroke:" ),strokeColorPicker,strokeBox,filledCheckbox );
         
         return settingsPanel;
     }
     
     private void styleColorPicker(ColorPicker picker)
     {
-        picker.getStyleClass().add(ColorPicker.STYLE_CLASS_BUTTON);
-        picker.setValue(Color.BLACK);
+        
+        picker.getStyleClass( ).add( ColorPicker.STYLE_CLASS_BUTTON );
+        picker.setValue( Color.BLACK );
     }
     
     private int numToInt(Number value)
     {
-        return (int) Math.floor(value.doubleValue());
+        
+        return (int) Math.floor( value.doubleValue( ) );
     }
     
     private HBox buildEdit()
     {
-        HBox editPanel = new HBox();
-        editPanel.setId("toolbar-edits");
         
-        String[] edits = {"undo", "redo"};
+        HBox editPanel = new HBox( );
+        editPanel.setId( "toolbar-edits" );
+        
+        String[] edits = {"undo","redo"};
         Button[] buttons = new Button[edits.length];
         
-        for (int i = 0; i < edits.length; i++) {
-            buttons[i] = getImageButton(edits[i]);
+        for (int i = 0; i < edits.length; i++)
+        {
+            buttons[i] = getImageButton( edits[i] );
         }
-        editPanel.getChildren().addAll(buttons);
+        editPanel.getChildren( ).addAll( buttons );
         
         //button array for undo
-        buttons[0].setOnAction( event -> {
-            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        buttons[0].setOnAction( event ->
+        {
+            graphics.clearRect( 0,0,canvas.getWidth( ),canvas.getHeight( ) );
             controller.undoShape( graphics );
-   
+            
         } );
-    
+        
         //button array for redo
-        buttons[1].setOnAction( event -> {
-            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        buttons[1].setOnAction( event ->
+        {
+            graphics.clearRect( 0,0,canvas.getWidth( ),canvas.getHeight( ) );
             controller.redoShape( graphics );
- 
+            
         } );
         return editPanel;
     }
     
     private ImageView getButtonIcon(String text)
     {
-        ImageView image = new ImageView(text + ".png");
-        image.setFitHeight(SHAPE_ICON_SIZE);
-        image.setFitWidth(SHAPE_ICON_SIZE);
+        
+        ImageView image = new ImageView( text + ".png" );
+        image.setFitHeight( SHAPE_ICON_SIZE );
+        image.setFitWidth( SHAPE_ICON_SIZE );
         return image;
     }
     
     private ToggleButton getImageToggleButton(String text)
     {
-        ToggleButton result = new ToggleButton();
-        result.setGraphic(getButtonIcon(text));
         
-        result.setOnAction( event -> {
+        ToggleButton result = new ToggleButton( );
+        result.setGraphic( getButtonIcon( text ) );
+        
+        result.setOnAction( event ->
+        {
             typeOfShape = text;
         } );
         return result;
@@ -196,135 +212,211 @@ public class DoodleView extends Application
     
     private Button getImageButton(String text)
     {
-        Button result = new Button();
-        result.setGraphic(getButtonIcon(text));
+        
+        Button result = new Button( );
+        result.setGraphic( getButtonIcon( text ) );
         return result;
     }
     
     
-    
     private Parent getCanvas()
     {
-        VBox box = new VBox();
         
-        canvas = new Canvas(WIN_WIDTH, WIN_HEIGHT);
-        graphics = canvas.getGraphicsContext2D();
-        canvas.setStyle("-fx-background-color: black");
+        VBox box = new VBox( );
+        canvas = new Canvas( WIN_WIDTH,WIN_HEIGHT );
+        graphics = canvas.getGraphicsContext2D( );
+        canvas.setStyle( "-fx-background-color: black" );
 //        canvas.widthProperty().bind(box.widthProperty());
 //        canvas.heightProperty().bind(box.heightProperty());
-        box.setStyle("-fx-background-color: #FFFFFF;");
+        box.setStyle( "-fx-background-color: #FFFFFF;" );
         
-        canvas.setOnMousePressed( event->{
+        canvas.setOnMousePressed( event ->
+        {
 //             x1 = event.getX();
-             x1.add( event.getX() );
+            x1.add( event.getX( ) );
 //             y1 = event.getY();
-            y1.add( event.getY() );
-            
+            y1.add( event.getY( ) );
+
 //            double x2 = x1 + 500;
 //            double y2 = y1 + 400;
             graphics.setStroke( Color.rgb( 120,12,43 ) );
 //            graphics.strokeLine(x1, y1, x2, y2); //draw a line
-        });
-        
-        canvas.setOnMouseDragged( event ->{
-            double x2 = event.getX();
-            double y2 = event.getY();
-            x1.add(x2);
-            y1.add(y2);
-            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            graphics.setStroke( Color.rgb( 12,120,43 ) );
-            controller.addShape( graphics, x1,y1, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
-            controller.redrawAllShapes( graphics );
-            controller.removePreviousShape();
-    
-    
-    
-        });
-        canvas.setOnMouseReleased( event -> {
-            //store to arraylist of shapes
-            //set a mouse.clear screen and draw all shapes
-            double x2 = event.getX();
-            double y2 = event.getY();
-            x1.add(x2);
-            y1.add(y2);
-            controller.addShape( graphics, x1,y1, typeOfShape, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
-            controller.redrawAllShapes( graphics );
-            x1.clear();
-            y1.clear();
-            
         } );
         
+        canvas.setOnMouseDragged( event ->
+        {
+            double x2 = event.getX( );
+            double y2 = event.getY( );
+            x1.add( x2 );
+            y1.add( y2 );
+            graphics.clearRect( 0,0,canvas.getWidth( ),canvas.getHeight( ) );
+            graphics.setStroke( Color.rgb( 12,120,43 ) );
+            controller.addShape( graphics,x1,y1,typeOfShape,fillColorPicker.getValue( ),strokeColorPicker.getValue( ),strokeSlider.getValue( ),filledCheckbox.isSelected( ) );
+            controller.redrawAllShapes( graphics );
+            controller.removePreviousShape( );
+            
+            
+        } );
+        canvas.setOnMouseReleased( event ->
+        {
+            //store to arraylist of shapes
+            //set a mouse.clear screen and draw all shapes
+            double x2 = event.getX( );
+            double y2 = event.getY( );
+            x1.add( x2 );
+            y1.add( y2 );
+            controller.addShape( graphics,x1,y1,typeOfShape,fillColorPicker.getValue( ),strokeColorPicker.getValue( ),strokeSlider.getValue( ),filledCheckbox.isSelected( ) );
+            controller.redrawAllShapes( graphics );
+            x1.clear( );
+            y1.clear( );
+            
+        } );
+
 
 //        graphics.strokeOval(x, y, width, height); //draw an oval
 //        graphics.strokeRectangle(x, y, width, height); //draw a rectangle
 //        graphics.strokePolyline(x[], y[], numPoints); //draw a several lines connected by points (a squiggle)
         
-        box.getChildren().add(canvas);
+        box.getChildren( ).add( canvas );
         
         return box;
     }
     
     private MenuBar buildMenu()
     {
-        MenuBar menuBar = new MenuBar();
-        Menu file = new Menu("File");
-        Menu edit = new Menu("Edit");
-        Menu draw = new Menu("Draw");
-        Menu help = new Menu("Help");
         
-        fileMenu(file);
-        editMenu(edit);
-        drawMenu(draw);
-        help(help);
+        MenuBar menuBar = new MenuBar( );
+        Menu file = new Menu( "File" );
+        Menu edit = new Menu( "Edit" );
+        Menu draw = new Menu( "Draw" );
+        Menu help = new Menu( "Help" );
         
-        menuBar.getMenus().addAll(file, edit, draw, help);
+        fileMenu( file );
+        editMenu( edit );
+        drawMenu( draw );
+        help( help );
+        
+        menuBar.getMenus( ).addAll( file,edit,draw,help );
         return menuBar;
     }
     
     private void fileMenu(Menu file)
     {
-        MenuItem[] items = {new MenuItem("Quit")};
-        file.getItems().addAll(items);
-        file.setOnAction( event -> {
-            Platform.exit();
+        MenuItem[] items = {new MenuItem( "Quit" )};
+        file.getItems( ).addAll( items );
+        file.setOnAction( event ->
+        {
+            Platform.exit( );
         } );
     }
     
     private void editMenu(Menu edit)
     {
-        MenuItem[] items = {new MenuItem("Undo"), new MenuItem("Redo")};
-        edit.getItems().addAll(items);
+        MenuItem[] items = {new MenuItem( "Undo" ),new MenuItem( "Redo" )};
+        edit.getItems( ).addAll( items );
+        
+            //button array for undo
+            items[0].setOnAction( event ->
+            {
+                graphics.clearRect( 0,0,canvas.getWidth( ),canvas.getHeight( ) );
+                controller.undoShape( graphics );
+        
+            } );
+    
+            //button array for redo
+            items[1].setOnAction( event ->
+            {
+                graphics.clearRect( 0,0,canvas.getWidth( ),canvas.getHeight( ) );
+                controller.redoShape( graphics );
+
+            } );
+        
     }
     
     private void drawMenu(Menu draw)
     {
-        Menu shapesMenu = new Menu("Shape Tools");
-        MenuItem[] shapes = {new MenuItem("Line"), new MenuItem("Oval"),
-                new MenuItem("Rectangle"), new MenuItem("Squiggle")};
-        shapesMenu.getItems().addAll(shapes);
-        draw.getItems().add(shapesMenu);
+        Menu shapesMenu = new Menu( "Shape Tools" );
+        MenuItem[] shapes = {new MenuItem( "Line" ),new MenuItem( "Oval" ),
+                new MenuItem( "Rectangle" ),new MenuItem( "Squiggle" )};
+        shapesMenu.getItems( ).addAll( shapes );
+        draw.getItems( ).add( shapesMenu );
+
+//        System.out.println( this );
         
-        for(int i=0; i < shapes.length; i++)
+        for (int i = 0; i < shapes.length; i++)
         {
             MenuItem clickImage = shapes[i];
-            shapes[i].setOnAction( event -> {
-                typeOfShape = clickImage.getText();
+            
+            int finalI = i;
+            shapes[i].setOnAction( event ->
+            {
+                typeOfShape = clickImage.getText( );
+//                System.out.println( clickImage.getText( ) );
+//                buttons[2].setSelected( true );
+//                System.out.println( buttons[finalI] );
+                updateToggle( clickImage.getText( ) );
+                
                 
             } );
         }
         
-        MenuItem clear = new MenuItem("Clear Shapes");
-        draw.getItems().add(clear);
-        clear.setOnAction(event ->  {
-            System.out.println("testing clear" );
-            controller.clearAll(graphics);
-            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        });
+        
+        MenuItem clear = new MenuItem( "Clear Shapes" );
+        draw.getItems( ).add( clear );
+        clear.setOnAction( event ->
+        {
+            System.out.println( "testing clear" );
+            controller.clearAll( graphics );
+            graphics.clearRect( 0,0,canvas.getWidth( ),canvas.getHeight( ) );
+        } );
+    }
+    
+    private void updateToggle(String text)
+    {
+        
+        switch (text)
+        {
+            case "Line":
+//                System.out.println( "Line created" );
+                buttons[0].setSelected( true );
+                buttons[0].requestFocus( );
+                
+                break;
+            case "Oval":
+//                System.out.println( "Oval created" );
+                buttons[1].setSelected( true );
+                buttons[1].requestFocus( );
+                break;
+            
+            case "Rectangle":
+                buttons[2].setSelected( true );
+                buttons[2].requestFocus( );
+                break;
+            
+            case "Squiggle":
+                buttons[3].setSelected( true );
+                buttons[3].requestFocus( );
+                break;
+        }
     }
     
     private void help(Menu about)
     {
-        MenuItem[] items = {new MenuItem("About")};
-        about.getItems().addAll(items);
+        MenuItem[] items = {new MenuItem( "About" )};
+        about.setOnAction( e ->
+        {
+            alertBox( );
+        } );
+        about.getItems( ).addAll( items );
+    }
+    
+    private void alertBox()
+    {
+        Alert alert = new Alert( Alert.AlertType.INFORMATION );
+        alert.setTitle( "Doodle Application" );
+        alert.setHeaderText( "Doodle Application Version 1.0" );
+        String s = "By: Shahbaz Iqbal <siqbal2@mail.greenriver.edu>";
+        alert.setContentText( s );
+        alert.show( );
     }
 }

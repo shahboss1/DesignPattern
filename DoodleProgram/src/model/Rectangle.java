@@ -31,17 +31,19 @@ public class Rectangle implements IShapes
     @Override
     public void drawShape(GraphicsContext graphics)
     {
-        double width = endX - x;
-        double height = endY - y;
+        double xValue = Math.min( x, endX );
+        double yValue = Math.min( y, endY );
+        double width = Math.abs(endX - x);
+        double height = Math.abs(endY - y);
         graphics.setStroke( strokeColor );
         graphics.setLineWidth( strokeline );
         graphics.setFill( fillColor );
-        graphics.strokeRect(x, y, width, height); //draw a rectangle
+        graphics.strokeRect(xValue, yValue, width, height); //draw a rectangle
   
     
         if (filledCheckbox)
         {
-            graphics.fillRect(x, y, width, height);
+            graphics.fillRect(xValue, yValue, width, height);
         }
     }
 }

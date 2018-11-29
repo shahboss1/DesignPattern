@@ -33,15 +33,17 @@ public class Oval implements IShapes
     @Override
     public void drawShape(GraphicsContext graphics)
     {
-        double width = endX - x;
-        double height = endY - y;
+        double xValue = Math.min( x, endX );
+        double yValue = Math.min( y, endY );
+        double width = Math.abs(endX - x);
+        double height = Math.abs(endY - y);
         graphics.setStroke( strokeColor );
         graphics.setLineWidth( strokeline );
         graphics.setFill( fillColor );
-        graphics.strokeOval(x, y, width, height); //draw an oval
+        graphics.strokeOval(xValue, yValue, width, height); //draw an oval
         if (filledCheckbox)
         {
-            graphics.fillOval(x, y, width, height);
+            graphics.fillOval(xValue, yValue, width, height);
         }
         
     }
