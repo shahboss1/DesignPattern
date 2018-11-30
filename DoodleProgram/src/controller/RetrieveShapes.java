@@ -12,11 +12,12 @@ import java.util.ArrayList;
  */
 public class RetrieveShapes
 {
-    ArrayList <IShapes> array = new ArrayList <>( );
-    ArrayList <IShapes> undoList = new ArrayList <>( );
+    private ArrayList <IShapes> array = new ArrayList <>( );
+    private ArrayList <IShapes> undoList = new ArrayList <>( );
     
     /**
      * This method clears shape.
+     * @param graphics graphics
      */
     public void clearAll(GraphicsContext graphics)
     {
@@ -27,16 +28,28 @@ public class RetrieveShapes
     
     /**
      * This method store shapes to array.
+     * @param graphics graphics
+     * @param x x
+     * @param y y
+     * @param choose choose
+     * @param fillColor fillColor
+     * @param strokeColor strokeColor
+     * @param strokeline strokeline
+     * @param filledCheckbox filledCheckbox
      */
     public void addShape(GraphicsContext graphics,ArrayList <Double> x,ArrayList <Double> y,String choose,Color fillColor,Color strokeColor,double strokeline,boolean filledCheckbox)
     {
         IShapes shapes = ShapeFactory.createShape( x, y, choose, fillColor, strokeColor, strokeline,filledCheckbox );
-        shapes.drawShape( graphics );
+        if (shapes != null)
+        {
+            shapes.drawShape( graphics );
+        }
         array.add( shapes );
     }
     
     /**
      * This method loops through array and redraw shapes.
+     * @param graphics graphics
      */
     public void redrawAllShapes(GraphicsContext graphics)
     {
@@ -59,6 +72,7 @@ public class RetrieveShapes
     
     /**
      * This method deletes shape and adds it to array.
+     * @param graphics graphics
      */
     public void undoShape(GraphicsContext graphics)
     {
@@ -73,6 +87,7 @@ public class RetrieveShapes
     
     /**
      * This method pull the shape from UndoList array and redraws it.
+     * @param graphics graphics
      */
     public void redoShape(GraphicsContext graphics)
     {
@@ -88,11 +103,11 @@ public class RetrieveShapes
     
     /**
      * This is toString method.
+     * @return return
      */
     @Override
     public String toString()
     {
-        
         return "RetrieveShapes{" +
                 "array=" + array +
                 ", undoList=" + undoList +

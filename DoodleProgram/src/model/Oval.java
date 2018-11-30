@@ -21,6 +21,14 @@ public class Oval implements IShapes
     
     /**
      * This is oval method which creates oval object.
+     * @param x x
+     * @param y y
+     * @param endX endX
+     * @param endY endY
+     * @param fillColor fillColor
+     * @param strokeColor strokeColor
+     * @param strokeline strokeline
+     * @param filledCheckbox filledCheckbox
      */
     public Oval(double x,double y,double endX,double endY,javafx.scene.paint.Color fillColor,Color strokeColor, double strokeline, boolean filledCheckbox)
     {

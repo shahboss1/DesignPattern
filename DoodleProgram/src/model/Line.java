@@ -21,6 +21,14 @@ public class Line implements IShapes
     
     /**
      * This is line method which creates line object.
+     * @param x x
+     * @param y y
+     * @param endX endX
+     * @param endY endY
+     * @param fillColor fillColor
+     * @param strokeColor strokeColor
+     * @param strokeline strokeline
+     * @param filledCheckbox filledCheckbox
      */
     public Line(double x,double y,double endX,double endY,Color fillColor, Color strokeColor, double strokeline, boolean filledCheckbox)
     {

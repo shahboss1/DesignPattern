@@ -21,6 +21,14 @@ public class Rectangle implements IShapes
     
     /**
      * This is rectangle method which creates rectangle object.
+     * @param x x
+     * @param y y
+     * @param endX endX
+     * @param endY endY
+     * @param fillColor fillColor
+     * @param strokeColor strokeColor
+     * @param strokeline strokeline
+     * @param filledCheckbox filledCheckbox
      */
     public Rectangle(double x,double y,double endX,double endY,Color fillColor, Color strokeColor, double strokeline, boolean filledCheckbox)
     {
