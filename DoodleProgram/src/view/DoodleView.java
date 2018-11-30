@@ -14,13 +14,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.IShapes;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-
+/**
+ * This is a Doodleiew class which extends application.
+ * @author Shahbaz Iqbal
+ * @version 1.0
+ */
 public class DoodleView extends Application
 {
-    
     public static final int WIN_WIDTH = 1000;
     public static final int WIN_HEIGHT = 600;
     public static final int SHAPE_ICON_SIZE = 20;
@@ -28,15 +31,12 @@ public class DoodleView extends Application
     public static final int MIN_STROKE = 1;
     public static ArrayList <Double> x1 = new ArrayList <>( );
     public static ArrayList <Double> y1 = new ArrayList <>( );
-    public static double x = 0;
-    public static double y = 0;
-    public static double width = 0;
-    public static double height = 0;
     public static String typeOfShape = "Line";
+    //public static IShapes shape;
     
-    //create instance of an object and then call drawshape method on that object
-    public static IShapes shape;
-    
+    /**
+     * Invokes RetrieveShape class.
+     */
     public RetrieveShapes controller = new RetrieveShapes( );
     
     //drawing on the canvas
@@ -52,6 +52,10 @@ public class DoodleView extends Application
     private Slider strokeSlider;
     private CheckBox filledCheckbox;
     
+    /**
+     * This method creates stage.
+     * @param stage stage
+     */
     @Override
     public void start(Stage stage)
     {
@@ -62,9 +66,7 @@ public class DoodleView extends Application
     
     private Scene getPrimaryScene()
     {
-        
         BorderPane mainPanel = new BorderPane( );
-        
         VBox top = new VBox( );
         top.getChildren( ).addAll( buildMenu( ),getToolbar( ) );
         
@@ -74,25 +76,20 @@ public class DoodleView extends Application
         
         Scene scene = new Scene( mainPanel,WIN_WIDTH,WIN_HEIGHT );
         scene.getStylesheets( ).add( "styles.css" );
-        
         return scene;
     }
     
     private Parent getToolbar()
     {
-        
         HBox panel = new HBox( );
         panel.setId( "toolbar-main" );
         panel.getChildren( ).addAll( buildShapeSection( ),buildSettings( ),buildEdit( ) );
-        
         return panel;
     }
-    
     ToggleButton[] buttons;
     
     private HBox buildShapeSection()
     {
-        
         HBox shapesPanel = new HBox( );
         shapesPanel.setId( "toolbar-shapes" );
         
@@ -115,7 +112,6 @@ public class DoodleView extends Application
     
     private HBox buildSettings()
     {
-        
         HBox settingsPanel = new HBox( );
         settingsPanel.setId( "toolbar-settings" );
         
@@ -142,20 +138,17 @@ public class DoodleView extends Application
     
     private void styleColorPicker(ColorPicker picker)
     {
-        
         picker.getStyleClass( ).add( ColorPicker.STYLE_CLASS_BUTTON );
         picker.setValue( Color.BLACK );
     }
     
     private int numToInt(Number value)
     {
-        
         return (int) Math.floor( value.doubleValue( ) );
     }
     
     private HBox buildEdit()
     {
-        
         HBox editPanel = new HBox( );
         editPanel.setId( "toolbar-edits" );
         
@@ -220,21 +213,12 @@ public class DoodleView extends Application
         canvas = new Canvas( WIN_WIDTH,WIN_HEIGHT );
         graphics = canvas.getGraphicsContext2D( );
         canvas.setStyle( "-fx-background-color: black" );
-//        canvas.widthProperty().bind(box.widthProperty());
-//        canvas.heightProperty().bind(box.heightProperty());
         box.setStyle( "-fx-background-color: #FFFFFF;" );
         
         canvas.setOnMousePressed( event ->
         {
-//             x1 = event.getX();
             x1.add( event.getX( ) );
-//             y1 = event.getY();
             y1.add( event.getY( ) );
-
-//            double x2 = x1 + 500;
-//            double y2 = y1 + 400;
-//            graphics.setStroke( Color.rgb( 120,12,43 ) );
-//            graphics.strokeLine(x1, y1, x2, y2); //draw a line
         } );
         
         canvas.setOnMouseDragged( event ->
@@ -244,7 +228,6 @@ public class DoodleView extends Application
             x1.add( x2 );
             y1.add( y2 );
             graphics.clearRect( 0,0,canvas.getWidth( ),canvas.getHeight( ) );
-//            graphics.setStroke( Color.rgb( 12,120,43 ) );
             controller.addShape( graphics,x1,y1,typeOfShape,fillColorPicker.getValue( ),strokeColorPicker.getValue( ),strokeSlider.getValue( ),filledCheckbox.isSelected( ) );
             controller.redrawAllShapes( graphics );
             controller.removePreviousShape( );
@@ -253,8 +236,6 @@ public class DoodleView extends Application
         } );
         canvas.setOnMouseReleased( event ->
         {
-            //store to arraylist of shapes
-            //set a mouse.clear screen and draw all shapes
             double x2 = event.getX( );
             double y2 = event.getY( );
             x1.add( x2 );
@@ -265,14 +246,7 @@ public class DoodleView extends Application
             y1.clear( );
             
         } );
-
-
-//        graphics.strokeOval(x, y, width, height); //draw an oval
-//        graphics.strokeRectangle(x, y, width, height); //draw a rectangle
-//        graphics.strokePolyline(x[], y[], numPoints); //draw a several lines connected by points (a squiggle)
-        
         box.getChildren( ).add( canvas );
-        
         return box;
     }
     
@@ -334,26 +308,17 @@ public class DoodleView extends Application
                 new MenuItem( "Rectangle" ),new MenuItem( "Squiggle" ),new MenuItem( "Triangle" )};
         shapesMenu.getItems( ).addAll( shapes );
         draw.getItems( ).add( shapesMenu );
-
-//        System.out.println( this );
         
         for (int i = 0; i < shapes.length; i++)
         {
             MenuItem clickImage = shapes[i];
-            
-            int finalI = i;
+//            int finalI = i;
             shapes[i].setOnAction( event ->
             {
                 typeOfShape = clickImage.getText( );
-//                System.out.println( clickImage.getText( ) );
-//                buttons[2].setSelected( true );
-//                System.out.println( buttons[finalI] );
                 updateToggle( clickImage.getText( ) );
-                
-                
             } );
         }
-        
         
         MenuItem clear = new MenuItem( "Clear Shapes" );
         draw.getItems( ).add( clear );
@@ -371,13 +336,11 @@ public class DoodleView extends Application
         switch (text)
         {
             case "Line":
-//                System.out.println( "Line created" );
                 buttons[0].setSelected( true );
                 buttons[0].requestFocus( );
                 
                 break;
             case "Oval":
-//                System.out.println( "Oval created" );
                 buttons[1].setSelected( true );
                 buttons[1].requestFocus( );
                 break;
@@ -416,5 +379,26 @@ public class DoodleView extends Application
         String stringName = "By: Shahbaz Iqbal <siqbal2@mail.greenriver.edu>";
         alert.setContentText( stringName );
         alert.show( );
+    }
+    
+    /**
+     * This is a toString method.
+     * @return toString.
+     */
+    @Override
+    public String toString()
+    {
+        
+        return "DoodleView{" +
+                "controller=" + controller +
+                ", canvas=" + canvas +
+                ", graphics=" + graphics +
+                ", shapeGroup=" + shapeGroup +
+                ", fillColorPicker=" + fillColorPicker +
+                ", strokeColorPicker=" + strokeColorPicker +
+                ", strokeSlider=" + strokeSlider +
+                ", filledCheckbox=" + filledCheckbox +
+                ", buttons=" + Arrays.toString( buttons ) +
+                '}';
     }
 }

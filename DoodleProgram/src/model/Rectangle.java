@@ -1,12 +1,15 @@
 package model;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.CheckBox;
 import javafx.scene.paint.Color;
 
+/**
+ * This is a Rectangle class which implements Ishape
+ * @author Shahbaz Iqbal
+ * @version 1.0
+ */
 public class Rectangle implements IShapes
 {
-    
     private final double strokeline;
     private double x;
     private double y;
@@ -16,6 +19,9 @@ public class Rectangle implements IShapes
     private Color strokeColor;
     private boolean filledCheckbox;
     
+    /**
+     * This is rectangle method which creates rectangle object.
+     */
     public Rectangle(double x,double y,double endX,double endY,Color fillColor, Color strokeColor, double strokeline, boolean filledCheckbox)
     {
         this.x = x;
@@ -28,6 +34,10 @@ public class Rectangle implements IShapes
         this.filledCheckbox = filledCheckbox;
     }
     
+    /**
+     * This is draw method which draws an rectangle.
+     * @param graphics draws shape
+     */
     @Override
     public void drawShape(GraphicsContext graphics)
     {
@@ -39,11 +49,29 @@ public class Rectangle implements IShapes
         graphics.setLineWidth( strokeline );
         graphics.setFill( fillColor );
         graphics.strokeRect(xValue, yValue, width, height); //draw a rectangle
-  
-    
+        
         if (filledCheckbox)
         {
             graphics.fillRect(xValue, yValue, width, height);
         }
+    }
+    
+    /**
+     * This is a toString method.
+     * @return toString.
+     */
+    @Override
+    public String toString()
+    {
+        return "Rectangle{" +
+                "strokeline=" + strokeline +
+                ", x=" + x +
+                ", y=" + y +
+                ", endX=" + endX +
+                ", endY=" + endY +
+                ", fillColor=" + fillColor +
+                ", strokeColor=" + strokeColor +
+                ", filledCheckbox=" + filledCheckbox +
+                '}';
     }
 }

@@ -1,15 +1,28 @@
 package model;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
 
+/**
+ * This is a Shapefactory class which implements factory pattern.
+ * @author Shahbaz Iqbal
+ * @version 1.0
+ */
 public class ShapeFactory
 {
+    /**
+     * This method creates shapes.
+     * @param x varible
+     * @param y variable
+     * @param choose shape
+     * @param fillColor fills color
+     * @param strokeColor stroke color
+     * @param strokeline stroke line
+     * @param filledCheckbox filled checkbox
+     * @return return null
+     */
     public static IShapes createShape(ArrayList<Double> x,ArrayList <Double> y,String choose,Color fillColor,Color strokeColor,double strokeline,boolean filledCheckbox)
     {
-        //this method will store shape
         switch (choose)
         {
             case "Rectangle":
@@ -35,5 +48,4 @@ public class ShapeFactory
     
         return null;
     }
-    
 }

@@ -1,11 +1,13 @@
 package model;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.CheckBox;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
-
+/**
+ * This is a Oval class which implements Ishape
+ * @author Shahbaz Iqbal
+ * @version 1.0
+ */
 public class Oval implements IShapes
 {
     private double x;
@@ -17,7 +19,9 @@ public class Oval implements IShapes
     private final double strokeline;
     private boolean filledCheckbox;
     
-    
+    /**
+     * This is oval method which creates oval object.
+     */
     public Oval(double x,double y,double endX,double endY,javafx.scene.paint.Color fillColor,Color strokeColor, double strokeline, boolean filledCheckbox)
     {
         this.x = x;
@@ -30,6 +34,10 @@ public class Oval implements IShapes
         this.filledCheckbox = filledCheckbox;
     }
     
+    /**
+     * This is draw method which draws an Oval.
+     * @param graphics draws shape
+     */
     @Override
     public void drawShape(GraphicsContext graphics)
     {
@@ -45,6 +53,25 @@ public class Oval implements IShapes
         {
             graphics.fillOval(xValue, yValue, width, height);
         }
+    }
+    
+    /**
+     * This is a toString method.
+     * @return toString.
+     */
+    @Override
+    public String toString()
+    {
         
+        return "Oval{" +
+                "x=" + x +
+                ", y=" + y +
+                ", endX=" + endX +
+                ", endY=" + endY +
+                ", fillColor=" + fillColor +
+                ", strokeColor=" + strokeColor +
+                ", strokeline=" + strokeline +
+                ", filledCheckbox=" + filledCheckbox +
+                '}';
     }
 }
