@@ -193,9 +193,7 @@ public class DoodleView extends Application
         result.setGraphic( getButtonIcon( text ) );
         
         result.setOnAction( event ->
-        {
-            typeOfShape = text;
-        } );
+                typeOfShape = text );
         return result;
     }
     
@@ -273,9 +271,7 @@ public class DoodleView extends Application
         MenuItem[] items = {new MenuItem( "Quit" )};
         file.getItems( ).addAll( items );
         file.setOnAction( event ->
-        {
-            Platform.exit( );
-        } );
+                Platform.exit( ) );
     }
     
     private void editMenu(Menu edit)
@@ -308,12 +304,10 @@ public class DoodleView extends Application
                 new MenuItem( "Rectangle" ),new MenuItem( "Squiggle" ),new MenuItem( "Triangle" )};
         shapesMenu.getItems( ).addAll( shapes );
         draw.getItems( ).add( shapesMenu );
-        
-        for (int i = 0; i < shapes.length; i++)
+    
+        for (MenuItem clickImage : shapes)
         {
-            MenuItem clickImage = shapes[i];
-//            int finalI = i;
-            shapes[i].setOnAction( event ->
+            clickImage.setOnAction( event ->
             {
                 typeOfShape = clickImage.getText( );
                 updateToggle( clickImage.getText( ) );
@@ -365,9 +359,7 @@ public class DoodleView extends Application
     {
         MenuItem[] items = {new MenuItem( "About" )};
         about.setOnAction( e ->
-        {
-            alertBox( );
-        } );
+                alertBox( ) );
         about.getItems( ).addAll( items );
     }
     
