@@ -15,7 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.IShapes;
-
 import java.util.ArrayList;
 
 
@@ -56,7 +55,6 @@ public class DoodleView extends Application
     @Override
     public void start(Stage stage)
     {
-        
         stage.setTitle( "Doodle Program" );
         stage.setScene( getPrimaryScene( ) );
         stage.show( );
@@ -98,7 +96,7 @@ public class DoodleView extends Application
         HBox shapesPanel = new HBox( );
         shapesPanel.setId( "toolbar-shapes" );
         
-        String[] shapes = {"Line","Oval","Rectangle","Squiggle"};
+        String[] shapes = {"Line","Oval","Rectangle","Squiggle", "Triangle"};
         buttons = new ToggleButton[shapes.length];
         shapeGroup = new ToggleGroup( );
         
@@ -190,7 +188,6 @@ public class DoodleView extends Application
     
     private ImageView getButtonIcon(String text)
     {
-        
         ImageView image = new ImageView( text + ".png" );
         image.setFitHeight( SHAPE_ICON_SIZE );
         image.setFitWidth( SHAPE_ICON_SIZE );
@@ -199,7 +196,6 @@ public class DoodleView extends Application
     
     private ToggleButton getImageToggleButton(String text)
     {
-        
         ToggleButton result = new ToggleButton( );
         result.setGraphic( getButtonIcon( text ) );
         
@@ -212,7 +208,6 @@ public class DoodleView extends Application
     
     private Button getImageButton(String text)
     {
-        
         Button result = new Button( );
         result.setGraphic( getButtonIcon( text ) );
         return result;
@@ -221,7 +216,6 @@ public class DoodleView extends Application
     
     private Parent getCanvas()
     {
-        
         VBox box = new VBox( );
         canvas = new Canvas( WIN_WIDTH,WIN_HEIGHT );
         graphics = canvas.getGraphicsContext2D( );
@@ -239,7 +233,7 @@ public class DoodleView extends Application
 
 //            double x2 = x1 + 500;
 //            double y2 = y1 + 400;
-            graphics.setStroke( Color.rgb( 120,12,43 ) );
+//            graphics.setStroke( Color.rgb( 120,12,43 ) );
 //            graphics.strokeLine(x1, y1, x2, y2); //draw a line
         } );
         
@@ -250,7 +244,7 @@ public class DoodleView extends Application
             x1.add( x2 );
             y1.add( y2 );
             graphics.clearRect( 0,0,canvas.getWidth( ),canvas.getHeight( ) );
-            graphics.setStroke( Color.rgb( 12,120,43 ) );
+//            graphics.setStroke( Color.rgb( 12,120,43 ) );
             controller.addShape( graphics,x1,y1,typeOfShape,fillColorPicker.getValue( ),strokeColorPicker.getValue( ),strokeSlider.getValue( ),filledCheckbox.isSelected( ) );
             controller.redrawAllShapes( graphics );
             controller.removePreviousShape( );
@@ -337,7 +331,7 @@ public class DoodleView extends Application
     {
         Menu shapesMenu = new Menu( "Shape Tools" );
         MenuItem[] shapes = {new MenuItem( "Line" ),new MenuItem( "Oval" ),
-                new MenuItem( "Rectangle" ),new MenuItem( "Squiggle" )};
+                new MenuItem( "Rectangle" ),new MenuItem( "Squiggle" ),new MenuItem( "Triangle" )};
         shapesMenu.getItems( ).addAll( shapes );
         draw.getItems( ).add( shapesMenu );
 
@@ -397,6 +391,10 @@ public class DoodleView extends Application
                 buttons[3].setSelected( true );
                 buttons[3].requestFocus( );
                 break;
+            case "Triangle":
+                buttons[4].setSelected( true );
+                buttons[4].requestFocus( );
+                break;
         }
     }
     
@@ -415,8 +413,8 @@ public class DoodleView extends Application
         Alert alert = new Alert( Alert.AlertType.INFORMATION );
         alert.setTitle( "Doodle Application" );
         alert.setHeaderText( "Doodle Application Version 1.0" );
-        String s = "By: Shahbaz Iqbal <siqbal2@mail.greenriver.edu>";
-        alert.setContentText( s );
+        String stringName = "By: Shahbaz Iqbal <siqbal2@mail.greenriver.edu>";
+        alert.setContentText( stringName );
         alert.show( );
     }
 }

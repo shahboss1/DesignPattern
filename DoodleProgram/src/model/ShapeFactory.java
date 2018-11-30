@@ -27,6 +27,9 @@ public class ShapeFactory
             case "Squiggle":
                 System.out.println( "Draw Whatever you like" );
                 return new Squiggle( x,y,fillColor,strokeColor,strokeline,filledCheckbox );
+            case "Triangle":
+                System.out.println( "Draw Triangle" );
+                return new Triangle(x.get( 0 ),y.get( 0 ),x.get( x.size( ) - 1 ),y.get( y.size( ) - 1 ),fillColor,strokeColor,strokeline,filledCheckbox);
                 
         }
     
